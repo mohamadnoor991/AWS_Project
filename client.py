@@ -22,11 +22,13 @@ class main():
         
         # Create a new message to be sent 
         req_smg = requestQueue.send_message(MessageBody=list_of_nb)
-        while not (responseQueue.receive_messages()):
+        while responseQueue.receive_messages():
             print("Wait for response . . . .")
-            answer_msg = responseQueue.receive_messages().body
+            for new in responseQueue.receive_messages():
+                answer_msg = new.body
+                new.delete()
             print(answer_msg)
-            break
+
 
 
 
