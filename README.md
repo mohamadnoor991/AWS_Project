@@ -1,4 +1,4 @@
-# Part1 description to launch.
+# Readme of Part1 : description to launch.
 
 To launch the application you had to launch the 2 programs of the application (client.py and EserverEC2):
 
