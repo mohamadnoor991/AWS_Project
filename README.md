@@ -1,4 +1,4 @@
-#Readme of Part2 : description to launch.
+# Readme of Part2 : description to launch.
 To launch the application you had to launch the 2 programs of the application (client.py and serverEC2.py).
 1 / Execute the client.py with the command "python3 client.py" or if you have pycharm you can directly execute the code on the terminal or use  the command line.
 First of all  the client.py will get connected to your aws account ,then it will ask you if whether you want to process an image by pressing 1 or to exit by pressing 2 ,once you type 1,it will ask you  to provide the image and there you should type the image name in  your desktop folder and here you should write its name with the full extension ,then he will ask about the name you want to give her in S3 bucket ( Keyname) of the image . Then the image will be sent to the (inbox) and to the worker (EC2 server)to be processed.
@@ -7,7 +7,7 @@ Once the worker is executed, it takes the image from the bucket S3 and then proc
 Once this message is printed ,the client has then the possibility to download the processed image in the S3 bucket, then the client can display again its command line, to ask whether you want to enter a new  image to be processed again or to quit the program by typing '2' on the command line.
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-#Version francaise
+# Version francaise
 
 Readme of Part2: description à lancer.
 Pour lancer l'application il fallait lancer les 2 programmes de l'application (client.py et serverEC2.py).
