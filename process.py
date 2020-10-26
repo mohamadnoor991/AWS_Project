@@ -141,5 +141,7 @@ if __name__ == '__main__':
             server.receive_msg()
             time.sleep(0.2)
         except KeyboardInterrupt:
-            print("Processor is shutdown ....")
+            print("Process is shutdown, Loading. . . . . ")
+            time.sleep(3)
+            break
         
