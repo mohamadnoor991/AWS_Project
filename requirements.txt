@@ -1,0 +1,9 @@
+boto3==1.15.17
+botocore==1.18.17 
+numpy==1.19.2 
+scikit-image==0.17.2
+matplotlib==3.3.2
+skimage==0.0
+logging==2 0.1.2
+logging==0.4.9.6
+
