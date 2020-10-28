@@ -23,14 +23,12 @@ This project is to create applications using AWS cloud  technology and interact 
 ├── requirements.txt
 ├── README.md
 ├── Calculation process
-│   ├── V1
+│   ├── V1 [ Stable]
 │   | ├── client.py
 │   | ├── serverEC2.py
 │   | └── activity.log
-│   └── V2
-│     ├── AlgoProcessingImages.py
+│   └── V2 
 │     ├── client.py
-│     ├── Moon.jpg
 │     └── serverEC2.py
 └── Image process
     ├── AlgoProcessingImages.py
