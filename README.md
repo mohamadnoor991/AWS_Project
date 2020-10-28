@@ -16,7 +16,29 @@ This project is to create applications using AWS cloud  technology and interact 
 |Youssef lamzaouak| ICM  | M2  | 
 
 ***
-# You will find 3 files in this repository!
+# Repository structure!
+
+```
+.
+├── requirements.txt
+├── README.md
+├── Calculation process
+│   ├── V1
+│   | ├── client.py
+│   | ├── serverEC2.py
+│   | └── activity.log
+│   └── V2
+│   | ├── AlgoProcessingImages.py
+│   | ├── client.py
+│   | ├── Moon.jpg
+│     └── serverEC2.py
+└── Image process
+    ├── AlgoProcessingImages.py
+    ├── client.py
+    ├── Moon.jpg
+    └── serverEC2.py
+
+```
 
 
 
