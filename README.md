@@ -14,8 +14,7 @@ Our team contains 5 members:
 ***
 # You will find 3 files in this repository!
 
-  - Import a HTML file and watch it magically convert to Markdown
-  - Drag and drop images (requires your Dropbox account be linked)
+
 
 
 You can also:
@@ -26,8 +25,8 @@ You can also:
   ***
 # Requirement for the firset project:
 
--- Install python3 on the AWS instance.
--- Import boto3 library to the paython3 on AWS instance.
+- Install python3 on the AWS instance.
+- Import boto3 library to the paython3 on AWS instance.
 * To doing that you can follow the instruction in the video on this link:
 https://www.youtube.com/watch?v=TcFB5kYrjoI&list=PLylErWCb-ka4xKS6rLMXvBQ7MGLbxrWGk&index=14
 
@@ -42,29 +41,11 @@ https://www.youtube.com/watch?v=TcFB5kYrjoI&list=PLylErWCb-ka4xKS6rLMXvBQ7MGLbxr
 - Install python3 on the AWS instance.
 - You will need to install the requirment file.
  
-
-
-
-
-
-
-
-
-
-
 ```sh
-$ pip3 install requirements.txt -yr
+$ pip3 install requirements.txt -y
 ```
 *In the second you can find 3 python files, one for the processing algorithm, one for the client, and one for the server(EC2). Will find also the image that used, the video-demo, and the report that will explain the mechanism of the project and how you will execute it.* 
 
 * * *
-
-
-
-
-
-
-
-
 
 
