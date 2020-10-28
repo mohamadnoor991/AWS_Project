@@ -7,17 +7,21 @@ try:
     import json
 except Exception as e:
     print(e)
+    
+import png
 import time
-
 import logging
-
+from PIL import Image
 import numpy as np
 import skimage.io
 import os
 import matplotlib.pyplot as plt
 from skimage import exposure
-import numpy as np
 import sys
+import os
+#import scipy.misc
+import imageio
+
 
 # Variable global pour les noms des queues d'entrée et de sortie.
 AWS_SQS_QUEUE_NAME_INPUT = "Inbox"
@@ -36,28 +40,30 @@ class worker(object):
         self.inputqueue = sqs.get_queue_by_name(QueueName=AWS_SQS_QUEUE_NAME_INPUT)
         print("You are connected to the SQS service ...")
 
-    def upload_image(Self,file_name, bucket, key_name):
-        """Upload a file to an S3 bucket
-
-        :param file_name: File to upload
-        :param bucket: Bucket to upload to
-        :param object_name: S3 object name. If not specified then file_name is used
-        :return: True if file was uploaded, else False
-        """
-        bucket = 'your-bucket-name'
-        file_name = 'location-of-your-file'
-        key_name = 'name-of-file-in-s3'
+    def upload_image(Self, file_name, bucket, key_name):
         s3 = boto3.client('s3')
         s3.upload_file(file_name, bucket, key_name)
-        # Upload the image
 
+        # Upload the image
         try:
-            response = s3.upload_file(file_name, bucket, key_name)
+        	response = s3.upload_file(file_name, bucket, key_name)
+        	print("The image is sended !!")
         except ClientError as e:
             logging.error(e)
-            # return False
-        # return True
+        # return False
+       
 
+    # download the image to process
+    def download_image(self, bucket, key_name, local_name):
+        s3 = boto3.resource('s3')
+        try:
+            s3.Bucket(bucket).download_file(key_name,local_name)
+        except botocore.exceptions.ClientError as e:
+            if e.response['Error']['Code'] == "404":
+                print("The object does not exist.")
+            else:
+                raise
+                
     def send(self, message=None):
         try:
             # Create the queue. This returns an SQS.Queue instance
@@ -80,7 +86,6 @@ class worker(object):
                 data = message.body
                 message.delete()
         except Exception:
-
             return []
         return data
 
@@ -101,15 +106,39 @@ class worker(object):
         # print list as integers
         print("list (li) : ", li)
 
-   #Fonction du process
-    #TO DO
-    def process(self,keyname):
-        newkeyname ="processed"
-        #return newkeyname
-        I = skimage.color.rgb2gray(Image);
-        I = I / np.max(I);
-        I2 = exposure.adjust_gamma(I, gamma);
-        return I2
+    #Process Image functionnality
+    
+    def adjust_gamma(self,image,gamma):
+         I=skimage.color.rgb2gray(image);
+         I = I / np.max(I) ;
+         I2= exposure.adjust_gamma(I, gamma);
+         return I2
+
+    def contrast_stretching(self, image ,E) :
+         I=skimage.color.rgb2gray(image);
+         epsilon=sys.float_info.epsilon ;
+         m=np.mean(I) ;
+         I=I.astype("float") ;
+         Ar=1./(1.+( m/(I+epsilon ) )**E) ;
+         return Ar;
+     
+    def Sauvola_Method(self,image,Wind_size,R=128,k=0.5):
+         imsize=image.shape
+         if(len(imsize)==3):
+             Image=skimage.color.rgb2gray(image)
+             imsize=Image.shape
+         Mask=np.zeros(imsize)
+         nrows=imsize[0]
+         ncols=imsize[1]
+         #detrminig the mean and the sd for each pixel
+         half_wind=Wind_size//2
+         for i in range(half_wind,nrows): 
+             for j in range(half_wind,ncols): 
+                 Window=Image[(i-half_wind):(i+half_wind),(j-half_wind):(j+half_wind)]
+                 mean=np.mean(Window)
+                 std=np.std(Window)
+                 Mask[i][j]=mean*(1+k*((std/R)-1))
+         return Mask
 
 
     def logFile(self):
@@ -143,25 +172,108 @@ class worker(object):
 
 
 if __name__ == "__main__":
+    i = None
+    if len(sys.argv) < 2 :
+         print("You should add a type of process \nTap \"gamma\" to adjust the gamma of the image\nTap \"contrast\" to adjust the contrast of the image\nTap \"sauvola\" to apply the Sauvola method to the image\n\n**************************************************************\nexample : python3 serverEC2.py gamma \n(This is a command for adjusting the gamma for an image).\n**************************************************************\n\nTry again, Bye :)")
+         exit()
+    else:
+         if str(sys.argv[1]) == "gamma" or str(sys.argv[1]) == "contrast" or str(sys.argv[1]) == "sauvola":
+             i = str(sys.argv[1])
+         else:
+             print("You should add a type of process \nTap \"gamma\" to adjust the gamma of the image\nTap \"contrast\" to adjust the contrast of the image\nTap \"sauvola\" to apply the Sauvola method to the image\n\n**************************************************************\nexample : python3 serverEC2.py gamma \n(This is a command for adjusting the gamma for an image).\n**************************************************************\n\nTry again, Bye :)")
+             exit()
+         
+         
+    
     # Get the service resource
     sqs = boto3.resource('sqs')
     #s3 = boto3.resource('s3')
     print("You are connected to the AWS service ...")
+    # we go to the dossier to process the image 
+    os.chdir("ProcessingImageDirectory")
     q = worker()
-    while True :
-        print("waiting for message ...")
-        time.sleep(0.5)
-        for keyname in q.inputqueue.receive_messages():
+    if i == "gamma":
+        while True :
+            print("waiting for an image ...")
             time.sleep(0.5)
-            print(keyname.body)
-	    Image=skimage.io.imread('Moon.jpg')
-    	    plt.imshow(Image,cmap='gray')
-    	    Image.shape
-            plt.show();
-            #li = q.transIntoList(str(message.body))
-            I2 = q.process("Moon.jpg")
-            plt.imshow(I2);
-            plt.show();
-            print("The image is processed !! ")
-            q.send("imageProcessed")
-            keyname.delete()
+            for keyname in q.inputqueue.receive_messages():
+                time.sleep(0.5)
+                print(keyname.body,"Image Processing ...")
+                q.download_image(AWS_S3_BUCKET, keyname.body,"ImageToProcess.jpg")
+                Ima=skimage.io.imread("ImageToProcess.jpg")
+                plt.imshow(Ima,cmap='gray')
+                Ima.shape
+                #plt.show();
+                I2 = q.adjust_gamma(Ima,5)
+                #We show the Processed Image and we save it with the Name (Keyname+"Processed.jpg") Manually with the save Button, and
+                #plt.show();            
+                NameProcessedImage = str(keyname.body)+"Processed.jpg"
+                KeyNameProcessedImage = str(keyname.body)+"Processed"           
+                #Save the Process Image in the local reprosetery of the worker.
+                binary_transform = np.array(I2)
+                imageio.imwrite(NameProcessedImage, binary_transform)
+                print("The image is processed !! ")
+                #Send the keyname of the Processed image in the sqs (outbox) Queue.
+                q.send(KeyNameProcessedImage)
+                #Send the processed Image in the S3
+                q.upload_image(NameProcessedImage, AWS_S3_BUCKET, KeyNameProcessedImage)
+      	        #Delete the key name of the Original Image from the Inbox Queue. 
+                keyname.delete()     
+      
+    if i == "contrast":
+        while True :
+            print("waiting for an image ...")
+            time.sleep(0.5)
+            for keyname in q.inputqueue.receive_messages():
+                time.sleep(0.5)
+                print(keyname.body,"Image Processing ...")
+                q.download_image(AWS_S3_BUCKET, keyname.body,"ImageToProcess.jpg")
+                Ima=skimage.io.imread("ImageToProcess.jpg")
+                plt.imshow(Ima,cmap='gray')
+                Ima.shape
+                #plt.show();
+                I2 = q.contrast_stretching(Ima,0.8)
+                #We show the Processed Image and we save it with the Name (Keyname+"Processed.jpg") Manually with the save Button, and
+                #plt.show();            
+                NameProcessedImage = str(keyname.body)+"Processed.jpg"
+                KeyNameProcessedImage = str(keyname.body)+"Processed"           
+                #Save the Process Image in the local reprosetery of the worker.
+                binary_transform = np.array(I2)
+                imageio.imwrite(NameProcessedImage, binary_transform)
+                print("The image is processed !! ")
+                #Send the keyname of the Processed image in the sqs (outbox) Queue.
+                q.send(KeyNameProcessedImage)
+                #Send the processed Image in the S3
+                q.upload_image(NameProcessedImage, AWS_S3_BUCKET, KeyNameProcessedImage)
+      	        #Delete the key name of the Original Image from the Inbox Queue. 
+                keyname.delete()                               
+         
+    if i == "sauvola":
+        while True :
+            print("waiting for an image ...")
+            time.sleep(0.5)
+            for keyname in q.inputqueue.receive_messages():
+                time.sleep(0.5)
+                print(keyname.body,"Image Processing ...")
+                q.download_image(AWS_S3_BUCKET, keyname.body,"ImageToProcess.jpg")
+                Ima=skimage.io.imread("ImageToProcess.jpg")
+                plt.imshow(Ima,cmap='gray')
+                Ima.shape
+                #plt.show();
+                Mask = q.Sauvola_Method(Ima,16)
+                I2 = skimage.color.rgb2gray(Ima)
+                I2 = I2>Mask
+                #We show the Processed Image and we save it with the Name (Keyname+"Processed.jpg") Manually with the save Button, and
+                #plt.show();            
+                NameProcessedImage = str(keyname.body)+"Processed.jpg"
+                KeyNameProcessedImage = str(keyname.body)+"Processed"           
+                #Save the Process Image in the local reprosetery of the worker.
+                binary_transform = np.array(I2)
+                imageio.imwrite(NameProcessedImage, img_as_uint(binary_transform))
+                print("The image is processed !! ")
+                #Send the keyname of the Processed image in the sqs (outbox) Queue.
+                q.send(KeyNameProcessedImage)
+                #Send the processed Image in the S3
+                q.upload_image(NameProcessedImage, AWS_S3_BUCKET, KeyNameProcessedImage)
+      	        #Delete the key name of the Original Image from the Inbox Queue. 
+                keyname.delete()                 
