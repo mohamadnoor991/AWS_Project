@@ -28,9 +28,9 @@ This project is to create applications using AWS cloud  technology and interact 
 │   | ├── serverEC2.py
 │   | └── activity.log
 │   └── V2
-│   | ├── AlgoProcessingImages.py
-│   | ├── client.py
-│   | ├── Moon.jpg
+│     ├── AlgoProcessingImages.py
+│     ├── client.py
+│     ├── Moon.jpg
 │     └── serverEC2.py
 └── Image process
     ├── AlgoProcessingImages.py
