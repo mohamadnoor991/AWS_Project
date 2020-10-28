@@ -2,7 +2,9 @@
 
 
 This project will give you an example of how you can use python3-boto3 to work with AWS.
-Our team contains 5 members:
+
+This project is to create applications using AWS cloud  technology and interact with it. Therefore, there will be 2 applications one for calculation process and the other for image process.
+### Our team contains 5 members:
 
 
 |Name|  Domain |  Master |  
