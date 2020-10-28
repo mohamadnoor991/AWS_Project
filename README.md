@@ -5,11 +5,13 @@ This project will give you an example of how you can use python3-boto3 to work w
 Our team contains 5 members:
 
 
-  -  Mohamad Nour Badr
--  Jehad Melad
--  Mourad benkaraache
--  Youssef lamzaouak
--  Rediet Tadesse
+|Name|  Domain |  Master |  
+|---|---|---|
+| Mohamad Nour Badr |  CPS2 |  M2 | 
+|Rediet Tadesse| CPS2  | M2  |
+|Mourad benkaraache| CPS2  | M2  | 
+|Jehad Melad| CPS2  | M2  |
+|Youssef lamzaouak| ICM  | M2  | 
 
 ***
 # You will find 3 files in this repository!
@@ -23,7 +25,7 @@ You can also:
 - Image processing by AWS.
 
   ***
-# Requirement for the firset project:
+# Requirement for the first project:
 
 - Install python3 on the AWS instance.
 - Import boto3 library to the paython3 on AWS instance.
