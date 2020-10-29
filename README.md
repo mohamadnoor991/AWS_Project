@@ -1,3 +1,44 @@
+# AWS_Project
+
+
+This project will give you an example of how you can use python3-boto3 to work with AWS.
+
+This project is to create applications using AWS cloud  technology and interact with it. Therefore, there will be 2 applications one for calculation process and the other for image process.
+###          Our team contains 5 members:
+
+
+|Name|  Domain |  Master |  
+|---|---|---|
+| Mohamad Nour Badr |  CPS2 |  M2 | 
+|Rediet Tadesse| CPS2  | M2  |
+|Mourad benkaraache| CPS2  | M2  | 
+|Jehad Melad| CPS2  | M2  |
+|Youssef lamzaouak| ICM  | M2  | 
+
+***
+# Repository structure!
+
+```
+.
+├── requirements.txt
+├── README.md
+├── Calculation process
+│   ├── V1 [ Stable]
+│   | ├── client.py
+│   | ├── serverEC2.py
+│   | └── activity.log
+│   └── V2 
+│     ├── client.py
+│     └── serverEC2.py
+└── Image process
+    ├── ProcessingImageDirectory
+    ├── AlgoProcessingImages.py
+    ├── client.py
+    ├── Moon.jpg
+    └── serverEC2.py
+
+```
+
 # Readme of Part1 : description to launch.
 
 To launch the application you had to launch the 2 programs of the application (client.py and EserverEC2):
