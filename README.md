@@ -4,7 +4,7 @@
 This project will give you an example of how you can use python3-boto3 to work with AWS.
 
 This project is to create applications using AWS cloud  technology and interact with it. Therefore, there will be 2 applications one for calculation process and the other for image process.
-### Our team contains 5 members:
+###          Our team contains 5 members:
 
 
 |Name|  Domain |  Master |  
@@ -31,6 +31,7 @@ This project is to create applications using AWS cloud  technology and interact 
 │     ├── client.py
 │     └── serverEC2.py
 └── Image process
+    ├── ProcessingImageDirectory
     ├── AlgoProcessingImages.py
     ├── client.py
     ├── Moon.jpg
@@ -40,11 +41,6 @@ This project is to create applications using AWS cloud  technology and interact 
 
 
 
-
-You can also:
-  - Client-server (request-response) project v1.
-- Client-server (request-response) projectv 2.
-- Image processing by AWS.
 
   ***
 # Requirement for the first project:
