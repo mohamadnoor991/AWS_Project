@@ -39,7 +39,12 @@ This project is to create applications using AWS cloud  technology and interact 
 
 ```
 
+```
+| Plugin | README |
+| ------ | ------ |
+| Dropbox | [AWS_Project/Client-Server_Project/client.py][PlDb] |
 
+```
 
 
   ***
