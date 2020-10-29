@@ -11,7 +11,7 @@ This project is to create applications using AWS cloud  technology and interact 
 |---|---|---|
 | Mohamad Nour Badr |  CPS2 |  M2 | 
 |Rediet Tadesse| CPS2  | M2  |
-|Mourad benkaraache| CPS2  | M2  | 
+|Morad BENKARAACHE| CPS2  | M2  | 
 |Jehad Melad| CPS2  | M2  |
 |Youssef lamzaouak| ICM  | M2  | 
 
