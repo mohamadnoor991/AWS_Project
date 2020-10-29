@@ -42,7 +42,7 @@ This project is to create applications using AWS cloud  technology and interact 
 ```
 | Plugin | README |
 | ------ | ------ |
-| Dropbox | [AWS_Project/Client-Server_Project/client.py][aws] |
+| Dropbox | [AWS_Project/Client-Server_Project/client.py][AWs] |
 
 ```
 
@@ -75,4 +75,4 @@ $ pip3 install requirements.txt -y
 
 
 
-[aws]: <https://github.com/mohamadnoor991/AWS_Project/tree/master/>
+[AWs]: <https://github.com/mohamadnoor991/AWS_Project/tree/Mohamad/>
