@@ -5,9 +5,7 @@ This project will give you an example of how you can use python3-boto3 to work w
 
 This project is to create applications using AWS cloud  technology and interact with it. Therefore, there will be 2 applications one for calculation process and the other for image process.
 ###          Our team contains 5 members:
-<div>
-<a href="#a">cxcvxcvcv</a> 
-</div>
+
 
 |Name|  Domain |  Master |  
 |---|---|---|
@@ -113,5 +111,5 @@ Pour lancer l'application dans l'instance EC2 (worker) avec Ubuntu Server 20.04 
 
 
 
-<div id="a"> here</div>
+
 
